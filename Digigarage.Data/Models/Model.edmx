@@ -1,0 +1,638 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DigigarageModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Booking">
+          <Key>
+            <PropertyRef Name="BookingId" />
+          </Key>
+          <Property Name="BookingId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerId" Type="int" />
+          <Property Name="VehicleId" Type="int" />
+          <Property Name="ServiceId" Type="int" />
+          <Property Name="BookingDate" Type="date" />
+          <Property Name="Status" Type="int" />
+        </EntityType>
+        <EntityType Name="Customers">
+          <Key>
+            <PropertyRef Name="CustomerId" />
+          </Key>
+          <Property Name="CustomerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="30" />
+          <Property Name="Address" Type="nvarchar(max)" />
+          <Property Name="City" Type="nvarchar" MaxLength="20" />
+          <Property Name="PhoneNo" Type="nvarchar" MaxLength="10" />
+          <Property Name="EmailId" Type="nvarchar" MaxLength="30" />
+          <Property Name="Password" Type="nvarchar" MaxLength="15" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="DeptId" />
+          </Key>
+          <Property Name="DeptId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Department" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Login">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="emailid" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Mechanic">
+          <Key>
+            <PropertyRef Name="MechanicId" />
+          </Key>
+          <Property Name="MechanicId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="20" />
+          <Property Name="MobileNo" Type="nvarchar" MaxLength="10" />
+          <Property Name="EmailId" Type="nvarchar" MaxLength="30" />
+          <Property Name="Brand" Type="nvarchar" MaxLength="15" />
+          <Property Name="DeptId" Type="int" />
+        </EntityType>
+        <EntityType Name="Payment">
+          <Key>
+            <PropertyRef Name="PaymentId" />
+          </Key>
+          <Property Name="PaymentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustId" Type="int" />
+          <Property Name="ServiceId" Type="int" />
+          <Property Name="VehicleId" Type="int" />
+          <Property Name="TotalAmount" Type="decimal" Precision="8" Scale="0" />
+          <Property Name="Date" Type="date" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userId" Type="int" Nullable="false" />
+          <Property Name="UserRole" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Service">
+          <Key>
+            <PropertyRef Name="ServiceId" />
+          </Key>
+          <Property Name="ServiceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ServiceName" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="StautsOfBooking">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="8" />
+        </EntityType>
+        <EntityType Name="Vehicles">
+          <Key>
+            <PropertyRef Name="VehicleId" />
+          </Key>
+          <Property Name="VehicleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LicencePlate" Type="nvarchar" MaxLength="10" />
+          <Property Name="Color" Type="nvarchar" MaxLength="10" />
+          <Property Name="FuelType" Type="nvarchar" MaxLength="10" />
+          <Property Name="Brand" Type="nvarchar" MaxLength="15" />
+          <Property Name="Model" Type="nvarchar" MaxLength="20" />
+          <Property Name="RegistraionDate" Type="date" />
+          <Property Name="ChassiNo" Type="nvarchar" MaxLength="17" />
+          <Property Name="EngineNo" Type="nvarchar" MaxLength="17" />
+          <Property Name="CustomerId" Type="int" />
+        </EntityType>
+        <Association Name="FK__Booking__Service__6FE99F9F">
+          <End Role="Service" Type="Self.Service" Multiplicity="0..1" />
+          <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Service">
+              <PropertyRef Name="ServiceId" />
+            </Principal>
+            <Dependent Role="Booking">
+              <PropertyRef Name="ServiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Booking__Status__71D1E811">
+          <End Role="StautsOfBooking" Type="Self.StautsOfBooking" Multiplicity="0..1" />
+          <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StautsOfBooking">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Booking">
+              <PropertyRef Name="Status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Booking__Vehicle__70DDC3D8">
+          <End Role="Vehicles" Type="Self.Vehicles" Multiplicity="0..1" />
+          <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vehicles">
+              <PropertyRef Name="VehicleId" />
+            </Principal>
+            <Dependent Role="Booking">
+              <PropertyRef Name="VehicleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Mechanic__DeptId__52593CB8">
+          <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
+          <End Role="Mechanic" Type="Self.Mechanic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="DeptId" />
+            </Principal>
+            <Dependent Role="Mechanic">
+              <PropertyRef Name="DeptId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Payment__Service__5DCAEF64">
+          <End Role="Service" Type="Self.Service" Multiplicity="0..1" />
+          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Service">
+              <PropertyRef Name="ServiceId" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="ServiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Payment__Vehicle__5EBF139D">
+          <End Role="Vehicles" Type="Self.Vehicles" Multiplicity="0..1" />
+          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vehicles">
+              <PropertyRef Name="VehicleId" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="VehicleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Role__userId__38996AB5">
+          <End Role="Login" Type="Self.Login" Multiplicity="1" />
+          <End Role="Role" Type="Self.Role" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Login">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Role">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Vehicles__Custom__4D94879B">
+          <End Role="Customers" Type="Self.Customers" Multiplicity="0..1" />
+          <End Role="Vehicles" Type="Self.Vehicles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="Vehicles">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DigigarageModelStoreContainer">
+          <EntitySet Name="Booking" EntityType="Self.Booking" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Login" EntityType="Self.Login" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Mechanic" EntityType="Self.Mechanic" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Payment" EntityType="Self.Payment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Service" EntityType="Self.Service" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StautsOfBooking" EntityType="Self.StautsOfBooking" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vehicles" EntityType="Self.Vehicles" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Booking__Service__6FE99F9F" Association="Self.FK__Booking__Service__6FE99F9F">
+            <End Role="Service" EntitySet="Service" />
+            <End Role="Booking" EntitySet="Booking" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Booking__Status__71D1E811" Association="Self.FK__Booking__Status__71D1E811">
+            <End Role="StautsOfBooking" EntitySet="StautsOfBooking" />
+            <End Role="Booking" EntitySet="Booking" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Booking__Vehicle__70DDC3D8" Association="Self.FK__Booking__Vehicle__70DDC3D8">
+            <End Role="Vehicles" EntitySet="Vehicles" />
+            <End Role="Booking" EntitySet="Booking" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Mechanic__DeptId__52593CB8" Association="Self.FK__Mechanic__DeptId__52593CB8">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="Mechanic" EntitySet="Mechanic" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Payment__Service__5DCAEF64" Association="Self.FK__Payment__Service__5DCAEF64">
+            <End Role="Service" EntitySet="Service" />
+            <End Role="Payment" EntitySet="Payment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Payment__Vehicle__5EBF139D" Association="Self.FK__Payment__Vehicle__5EBF139D">
+            <End Role="Vehicles" EntitySet="Vehicles" />
+            <End Role="Payment" EntitySet="Payment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Role__userId__38996AB5" Association="Self.FK__Role__userId__38996AB5">
+            <End Role="Login" EntitySet="Login" />
+            <End Role="Role" EntitySet="Role" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Vehicles__Custom__4D94879B" Association="Self.FK__Vehicles__Custom__4D94879B">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Vehicles" EntitySet="Vehicles" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DigigarageModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="DigigarageEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Logins" EntityType="DigigarageModel.Login" />
+          <EntitySet Name="Roles" EntityType="DigigarageModel.Role" />
+          <AssociationSet Name="FK__Role__userId__38996AB5" Association="DigigarageModel.FK__Role__userId__38996AB5">
+            <End Role="Login" EntitySet="Logins" />
+            <End Role="Role" EntitySet="Roles" />
+          </AssociationSet>
+          <EntitySet Name="Customers" EntityType="DigigarageModel.Customer" />
+          <EntitySet Name="Departments" EntityType="DigigarageModel.Department" />
+          <EntitySet Name="Mechanics" EntityType="DigigarageModel.Mechanic" />
+          <EntitySet Name="Payments" EntityType="DigigarageModel.Payment" />
+          <EntitySet Name="Services" EntityType="DigigarageModel.Service" />
+          <EntitySet Name="StautsOfBookings" EntityType="DigigarageModel.StautsOfBooking" />
+          <EntitySet Name="Vehicles" EntityType="DigigarageModel.Vehicle" />
+          <AssociationSet Name="FK__Vehicles__Custom__4D94879B" Association="DigigarageModel.FK__Vehicles__Custom__4D94879B">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Vehicle" EntitySet="Vehicles" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Mechanic__DeptId__52593CB8" Association="DigigarageModel.FK__Mechanic__DeptId__52593CB8">
+            <End Role="Department" EntitySet="Departments" />
+            <End Role="Mechanic" EntitySet="Mechanics" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Payment__Service__5DCAEF64" Association="DigigarageModel.FK__Payment__Service__5DCAEF64">
+            <End Role="Service" EntitySet="Services" />
+            <End Role="Payment" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Payment__Vehicle__5EBF139D" Association="DigigarageModel.FK__Payment__Vehicle__5EBF139D">
+            <End Role="Vehicle" EntitySet="Vehicles" />
+            <End Role="Payment" EntitySet="Payments" />
+          </AssociationSet>
+          <EntitySet Name="Bookings" EntityType="DigigarageModel.Booking" />
+          <AssociationSet Name="FK__Booking__Service__6FE99F9F" Association="DigigarageModel.FK__Booking__Service__6FE99F9F">
+            <End Role="Service" EntitySet="Services" />
+            <End Role="Booking" EntitySet="Bookings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Booking__Status__71D1E811" Association="DigigarageModel.FK__Booking__Status__71D1E811">
+            <End Role="StautsOfBooking" EntitySet="StautsOfBookings" />
+            <End Role="Booking" EntitySet="Bookings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Booking__Vehicle__70DDC3D8" Association="DigigarageModel.FK__Booking__Vehicle__70DDC3D8">
+            <End Role="Vehicle" EntitySet="Vehicles" />
+            <End Role="Booking" EntitySet="Bookings" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Login">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="emailid" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Roles" Relationship="DigigarageModel.FK__Role__userId__38996AB5" FromRole="Login" ToRole="Role" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userId" Type="Int32" Nullable="false" />
+          <Property Name="UserRole" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Login" Relationship="DigigarageModel.FK__Role__userId__38996AB5" FromRole="Role" ToRole="Login" />
+        </EntityType>
+        <Association Name="FK__Role__userId__38996AB5">
+          <End Type="DigigarageModel.Login" Role="Login" Multiplicity="1" />
+          <End Type="DigigarageModel.Role" Role="Role" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Login">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Role">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="CustomerId" />
+          </Key>
+          <Property Name="CustomerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNo" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="EmailId" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Vehicles" Relationship="DigigarageModel.FK__Vehicles__Custom__4D94879B" FromRole="Customer" ToRole="Vehicle" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="DeptId" />
+          </Key>
+          <Property Name="DeptId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Department1" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Mechanics" Relationship="DigigarageModel.FK__Mechanic__DeptId__52593CB8" FromRole="Department" ToRole="Mechanic" />
+        </EntityType>
+        <EntityType Name="Mechanic">
+          <Key>
+            <PropertyRef Name="MechanicId" />
+          </Key>
+          <Property Name="MechanicId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="MobileNo" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="EmailId" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Brand" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="DeptId" Type="Int32" />
+          <NavigationProperty Name="Department" Relationship="DigigarageModel.FK__Mechanic__DeptId__52593CB8" FromRole="Mechanic" ToRole="Department" />
+        </EntityType>
+        <EntityType Name="Payment">
+          <Key>
+            <PropertyRef Name="PaymentId" />
+          </Key>
+          <Property Name="PaymentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustId" Type="Int32" />
+          <Property Name="ServiceId" Type="Int32" />
+          <Property Name="VehicleId" Type="Int32" />
+          <Property Name="TotalAmount" Type="Decimal" Precision="8" Scale="0" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Service" Relationship="DigigarageModel.FK__Payment__Service__5DCAEF64" FromRole="Payment" ToRole="Service" />
+          <NavigationProperty Name="Vehicle" Relationship="DigigarageModel.FK__Payment__Vehicle__5EBF139D" FromRole="Payment" ToRole="Vehicle" />
+        </EntityType>
+        <EntityType Name="Service">
+          <Key>
+            <PropertyRef Name="ServiceId" />
+          </Key>
+          <Property Name="ServiceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ServiceName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Payments" Relationship="DigigarageModel.FK__Payment__Service__5DCAEF64" FromRole="Service" ToRole="Payment" />
+          <NavigationProperty Name="Bookings" Relationship="DigigarageModel.FK__Booking__Service__6FE99F9F" FromRole="Service" ToRole="Booking" />
+        </EntityType>
+        <EntityType Name="StautsOfBooking">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Bookings" Relationship="DigigarageModel.FK__Booking__Status__71D1E811" FromRole="StautsOfBooking" ToRole="Booking" />
+        </EntityType>
+        <EntityType Name="Vehicle">
+          <Key>
+            <PropertyRef Name="VehicleId" />
+          </Key>
+          <Property Name="VehicleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LicencePlate" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Color" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="FuelType" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Brand" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Model" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="RegistraionDate" Type="DateTime" Precision="0" />
+          <Property Name="ChassiNo" Type="String" MaxLength="17" FixedLength="false" Unicode="true" />
+          <Property Name="EngineNo" Type="String" MaxLength="17" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerId" Type="Int32" />
+          <NavigationProperty Name="Customer" Relationship="DigigarageModel.FK__Vehicles__Custom__4D94879B" FromRole="Vehicle" ToRole="Customer" />
+          <NavigationProperty Name="Payments" Relationship="DigigarageModel.FK__Payment__Vehicle__5EBF139D" FromRole="Vehicle" ToRole="Payment" />
+          <NavigationProperty Name="Bookings" Relationship="DigigarageModel.FK__Booking__Vehicle__70DDC3D8" FromRole="Vehicle" ToRole="Booking" />
+        </EntityType>
+        <Association Name="FK__Vehicles__Custom__4D94879B">
+          <End Type="DigigarageModel.Customer" Role="Customer" Multiplicity="0..1" />
+          <End Type="DigigarageModel.Vehicle" Role="Vehicle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="Vehicle">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Mechanic__DeptId__52593CB8">
+          <End Type="DigigarageModel.Department" Role="Department" Multiplicity="0..1" />
+          <End Type="DigigarageModel.Mechanic" Role="Mechanic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="DeptId" />
+            </Principal>
+            <Dependent Role="Mechanic">
+              <PropertyRef Name="DeptId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Payment__Service__5DCAEF64">
+          <End Type="DigigarageModel.Service" Role="Service" Multiplicity="0..1" />
+          <End Type="DigigarageModel.Payment" Role="Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Service">
+              <PropertyRef Name="ServiceId" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="ServiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Payment__Vehicle__5EBF139D">
+          <End Type="DigigarageModel.Vehicle" Role="Vehicle" Multiplicity="0..1" />
+          <End Type="DigigarageModel.Payment" Role="Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vehicle">
+              <PropertyRef Name="VehicleId" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="VehicleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Booking">
+          <Key>
+            <PropertyRef Name="BookingId" />
+          </Key>
+          <Property Name="BookingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerId" Type="Int32" />
+          <Property Name="VehicleId" Type="Int32" />
+          <Property Name="ServiceId" Type="Int32" />
+          <Property Name="BookingDate" Type="DateTime" Precision="0" />
+          <Property Name="Status" Type="Int32" />
+          <NavigationProperty Name="Service" Relationship="DigigarageModel.FK__Booking__Service__6FE99F9F" FromRole="Booking" ToRole="Service" />
+          <NavigationProperty Name="StautsOfBooking" Relationship="DigigarageModel.FK__Booking__Status__71D1E811" FromRole="Booking" ToRole="StautsOfBooking" />
+          <NavigationProperty Name="Vehicle" Relationship="DigigarageModel.FK__Booking__Vehicle__70DDC3D8" FromRole="Booking" ToRole="Vehicle" />
+        </EntityType>
+        <Association Name="FK__Booking__Service__6FE99F9F">
+          <End Type="DigigarageModel.Service" Role="Service" Multiplicity="0..1" />
+          <End Type="DigigarageModel.Booking" Role="Booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Service">
+              <PropertyRef Name="ServiceId" />
+            </Principal>
+            <Dependent Role="Booking">
+              <PropertyRef Name="ServiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Booking__Status__71D1E811">
+          <End Type="DigigarageModel.StautsOfBooking" Role="StautsOfBooking" Multiplicity="0..1" />
+          <End Type="DigigarageModel.Booking" Role="Booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StautsOfBooking">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Booking">
+              <PropertyRef Name="Status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Booking__Vehicle__70DDC3D8">
+          <End Type="DigigarageModel.Vehicle" Role="Vehicle" Multiplicity="0..1" />
+          <End Type="DigigarageModel.Booking" Role="Booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vehicle">
+              <PropertyRef Name="VehicleId" />
+            </Principal>
+            <Dependent Role="Booking">
+              <PropertyRef Name="VehicleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DigigarageModelStoreContainer" CdmEntityContainer="DigigarageEntities">
+          <EntitySetMapping Name="Logins">
+            <EntityTypeMapping TypeName="DigigarageModel.Login">
+              <MappingFragment StoreEntitySet="Login">
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="emailid" ColumnName="emailid" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="DigigarageModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="UserRole" ColumnName="UserRole" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="DigigarageModel.Customer">
+              <MappingFragment StoreEntitySet="Customers">
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+                <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Departments">
+            <EntityTypeMapping TypeName="DigigarageModel.Department">
+              <MappingFragment StoreEntitySet="Department">
+                <ScalarProperty Name="Department1" ColumnName="Department" />
+                <ScalarProperty Name="DeptId" ColumnName="DeptId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Mechanics">
+            <EntityTypeMapping TypeName="DigigarageModel.Mechanic">
+              <MappingFragment StoreEntitySet="Mechanic">
+                <ScalarProperty Name="DeptId" ColumnName="DeptId" />
+                <ScalarProperty Name="Brand" ColumnName="Brand" />
+                <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="MechanicId" ColumnName="MechanicId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Payments">
+            <EntityTypeMapping TypeName="DigigarageModel.Payment">
+              <MappingFragment StoreEntitySet="Payment">
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+                <ScalarProperty Name="VehicleId" ColumnName="VehicleId" />
+                <ScalarProperty Name="ServiceId" ColumnName="ServiceId" />
+                <ScalarProperty Name="CustId" ColumnName="CustId" />
+                <ScalarProperty Name="PaymentId" ColumnName="PaymentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Services">
+            <EntityTypeMapping TypeName="DigigarageModel.Service">
+              <MappingFragment StoreEntitySet="Service">
+                <ScalarProperty Name="ServiceName" ColumnName="ServiceName" />
+                <ScalarProperty Name="ServiceId" ColumnName="ServiceId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StautsOfBookings">
+            <EntityTypeMapping TypeName="DigigarageModel.StautsOfBooking">
+              <MappingFragment StoreEntitySet="StautsOfBooking">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vehicles">
+            <EntityTypeMapping TypeName="DigigarageModel.Vehicle">
+              <MappingFragment StoreEntitySet="Vehicles">
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="EngineNo" ColumnName="EngineNo" />
+                <ScalarProperty Name="ChassiNo" ColumnName="ChassiNo" />
+                <ScalarProperty Name="RegistraionDate" ColumnName="RegistraionDate" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="Brand" ColumnName="Brand" />
+                <ScalarProperty Name="FuelType" ColumnName="FuelType" />
+                <ScalarProperty Name="Color" ColumnName="Color" />
+                <ScalarProperty Name="LicencePlate" ColumnName="LicencePlate" />
+                <ScalarProperty Name="VehicleId" ColumnName="VehicleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Bookings">
+            <EntityTypeMapping TypeName="DigigarageModel.Booking">
+              <MappingFragment StoreEntitySet="Booking">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="BookingDate" ColumnName="BookingDate" />
+                <ScalarProperty Name="ServiceId" ColumnName="ServiceId" />
+                <ScalarProperty Name="VehicleId" ColumnName="VehicleId" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="BookingId" ColumnName="BookingId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

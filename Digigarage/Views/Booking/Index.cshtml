@@ -1,0 +1,57 @@
+﻿@model IEnumerable<Digigarage.BusinessEntities.BookingViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CustomerId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BookingDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Service.ServiceName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StautsOfBooking.Status)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Vehicle.LicencePlate)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CustomerId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BookingDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Service.ServiceName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StautsOfBooking.Status)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Vehicle.LicencePlate)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.BookingId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.BookingId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.BookingId })
+        </td>
+    </tr>
+}
+
+</table>

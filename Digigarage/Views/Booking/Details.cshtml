@@ -1,0 +1,58 @@
+﻿@model Digigarage.BusinessEntities.BookingViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Booking</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CustomerId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CustomerId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BookingDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BookingDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Service.ServiceName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Service.ServiceName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StautsOfBooking.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StautsOfBooking.Status)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Vehicle.LicencePlate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Vehicle.LicencePlate)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.BookingId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
