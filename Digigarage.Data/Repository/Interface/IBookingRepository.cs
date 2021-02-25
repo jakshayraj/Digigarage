@@ -11,7 +11,6 @@ namespace Digigarage.Data.Repository.Interface
     {
         BookingViewModel GetBooking(int? Id);
         IEnumerable<BookingViewModel> GetAllBooking();
-        IEnumerable<BookingViewModel> GetAllBookingByCustomer(int id);
         string CreateBooking(BookingViewModel model);
         string UpdateBooking(BookingViewModel model);
         string DeleteBooking(int? Id);

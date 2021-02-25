@@ -14,15 +14,25 @@ namespace Digigarage.Data.Models
     
     public partial class Booking
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Booking()
+        {
+            this.BookingHistories = new HashSet<BookingHistory>();
+        }
+    
         public int BookingId { get; set; }
-        public Nullable<int> CustomerId { get; set; }
         public Nullable<int> VehicleId { get; set; }
         public Nullable<int> ServiceId { get; set; }
         public Nullable<System.DateTime> BookingDate { get; set; }
         public Nullable<int> Status { get; set; }
+        public Nullable<int> DepartmentId { get; set; }
+        public string Description { get; set; }
     
-        public virtual Service Service { get; set; }
         public virtual StautsOfBooking StautsOfBooking { get; set; }
         public virtual Vehicle Vehicle { get; set; }
+        public virtual Department Department { get; set; }
+        public virtual Service Service { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BookingHistory> BookingHistories { get; set; }
     }
 }

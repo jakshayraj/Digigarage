@@ -19,6 +19,7 @@ namespace Digigarage.Data.Models
         {
             this.Payments = new HashSet<Payment>();
             this.Bookings = new HashSet<Booking>();
+            this.BookingHistories = new HashSet<BookingHistory>();
         }
     
         public int VehicleId { get; set; }
@@ -37,5 +38,7 @@ namespace Digigarage.Data.Models
         public virtual ICollection<Payment> Payments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Booking> Bookings { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BookingHistory> BookingHistories { get; set; }
     }
 }

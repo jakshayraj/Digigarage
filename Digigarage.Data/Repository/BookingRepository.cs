@@ -27,12 +27,31 @@ namespace Digigarage.Data.Repository
                     return "Exist";
                 }
                     
-                    model.BookingDate = DateTime.Now;
-                    model.Status = 1;
-                    Booking entity = Mapper.Map<BookingViewModel, Booking>(model);
-                    _dbContext.Bookings.Add(entity);
-                    _dbContext.SaveChanges();
-                    return "Booking added";
+                model.BookingDate = DateTime.Now;
+                model.Status = 1;
+                if (model.ServiceId == 4)
+                {
+                    model.DepartmentId = 2;
+                }
+                else if (model.ServiceId == 5)
+                {
+                    model.DepartmentId = 3;
+                }
+                else
+                {
+                    model.DepartmentId = model.ServiceId;
+                }
+                Booking entity = Mapper.Map<BookingViewModel, Booking>(model);
+                _dbContext.Bookings.Add(entity);
+                _dbContext.SaveChanges();
+                BookingHistory bookingHistory = new BookingHistory();
+                bookingHistory.ServiceId = model.ServiceId;
+                bookingHistory.BookingId = entity.BookingId;
+                bookingHistory.VehicleId = model.VehicleId;
+                bookingHistory.DepartmentId = model.DepartmentId;
+                _dbContext.BookingHistories.Add(bookingHistory);
+                _dbContext.SaveChanges();
+                return "Booking added";
                 
             }
             return "Model is null";
@@ -54,13 +73,7 @@ namespace Digigarage.Data.Repository
             return bookingsEntities;
         }
 
-        public IEnumerable<BookingViewModel> GetAllBookingByCustomer(int id)
-        {
-            IEnumerable<Booking> Booking = _dbContext.Bookings.Where(a => a.CustomerId == id);
-            IEnumerable<BookingViewModel> bookingsEntities =
-                Mapper.Map<IEnumerable<BookingViewModel>>(Booking);
-            return bookingsEntities;
-        }
+        
 
         public BookingViewModel GetBooking(int? Id)
         {

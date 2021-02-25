@@ -34,6 +34,9 @@ namespace Digigarage.Business.Automapper
 
             CreateMap<Vehicle, VehicleViewModel>();
             CreateMap<VehicleViewModel, Vehicle>();
+
+            CreateMap<BookingHistory, BookingHistoryViewModel>();
+            CreateMap<BookingHistoryViewModel, BookingHistory>();
         }
     }
 }

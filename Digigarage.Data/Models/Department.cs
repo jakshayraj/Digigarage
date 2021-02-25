@@ -18,6 +18,8 @@ namespace Digigarage.Data.Models
         public Department()
         {
             this.Mechanics = new HashSet<Mechanic>();
+            this.Bookings = new HashSet<Booking>();
+            this.BookingHistories = new HashSet<BookingHistory>();
         }
     
         public int DeptId { get; set; }
@@ -25,5 +27,9 @@ namespace Digigarage.Data.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Mechanic> Mechanics { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Booking> Bookings { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BookingHistory> BookingHistories { get; set; }
     }
 }

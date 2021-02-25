@@ -11,6 +11,9 @@ namespace Digigarage.Business.Interface
     {
         MechanicViewModel GetMechanic(int Id);
         IEnumerable<MechanicViewModel> GetAllMechanic();
+        IEnumerable<MechanicViewModel> GetMechanicOfWashing();
+        IEnumerable<MechanicViewModel> GetMechanicOfRepairing();
+        IEnumerable<MechanicViewModel> GetMechanicOfMaintainance();
         string CreateMechanic(MechanicViewModel model);
         string UpdateMechanic(MechanicViewModel model);
         string DeleteMechanic(int Id);

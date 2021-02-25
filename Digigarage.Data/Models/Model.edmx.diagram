@@ -19,11 +19,18 @@
         <AssociationConnector Association="DigigarageModel.FK__Mechanic__DeptId__52593CB8" />
         <AssociationConnector Association="DigigarageModel.FK__Payment__Service__5DCAEF64" />
         <AssociationConnector Association="DigigarageModel.FK__Payment__Vehicle__5EBF139D" />
-        <EntityTypeShape EntityType="DigigarageModel.Booking" Width="1.5" PointX="5.25" PointY="8.375" />
-        <AssociationConnector Association="DigigarageModel.FK__Booking__Service__6FE99F9F" />
+        <EntityTypeShape EntityType="DigigarageModel.Booking" Width="1.5" PointX="5.25" PointY="7.125" />
         <AssociationConnector Association="DigigarageModel.FK__Booking__Status__71D1E811" />
         <AssociationConnector Association="DigigarageModel.FK__Booking__Vehicle__70DDC3D8" />
-      </Diagram>
+        <AssociationConnector Association="DigigarageModel.FK__Booking__Departm__0E6E26BF" />
+        <AssociationConnector Association="DigigarageModel.FK__Booking__Service__0F624AF8" />
+        <EntityTypeShape EntityType="DigigarageModel.BookingHistory" Width="1.5" PointX="8" PointY="9.625" />
+        <AssociationConnector Association="DigigarageModel.FK__BookingHi__Depar__17036CC0" />
+        <AssociationConnector Association="DigigarageModel.FK__BookingHi__Servi__17F790F9" />
+        <AssociationConnector Association="DigigarageModel.FK__BookingHi__Vehic__18EBB532" />
+        <AssociationConnector Association="DigigarageModel.FK__BookingHi__Booki__1AD3FDA4" />
+        <AssociationConnector Association="DigigarageModel.FK__BookingHi__Mecha__19DFD96B" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

@@ -7,21 +7,20 @@ using System.Threading.Tasks;
 
 namespace Digigarage.BusinessEntities
 {
-    public class BookingViewModel
+    public class BookingHistoryViewModel
     {
-        public int BookingId { get; set; }
-        [Required]
+        public int HistoryId { get; set; }
+        public Nullable<int> BookingId { get; set; }
         public Nullable<int> VehicleId { get; set; }
-        [Required]
         public Nullable<int> ServiceId { get; set; }
-        public Nullable<System.DateTime> BookingDate { get; set; }
-        public Nullable<int> Status { get; set; }
         public Nullable<int> DepartmentId { get; set; }
-        public string Description { get; set; }
+        [Required]
+        public Nullable<int> MechanicId { get; set; }
 
+        public virtual DepartmentViewModel Department { get; set; }
         public virtual ServiceViewModel Service { get; set; }
         public virtual VehicleViewModel Vehicle { get; set; }
-        public virtual StautsOfBookingViewModel StautsOfBooking { get; set; }
-        public virtual DepartmentViewModel Department { get; set; }
+        public virtual BookingViewModel Booking { get; set; }
+        public virtual MechanicViewModel Mechanic { get; set; }
     }
 }

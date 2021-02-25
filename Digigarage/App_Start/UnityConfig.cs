@@ -24,7 +24,7 @@ namespace Digigarage
             container.RegisterType<IBookingManager, BookingManager>();
             container.RegisterType<ILoginManager, LoginManager>();
             container.RegisterType<IDepartmentManager, DepartmentManager>();
-
+            container.RegisterType<IBookingHistoryManager, BookingHistoryManager>();
             container.AddNewExtension<RepositoryHelper>();
 
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));

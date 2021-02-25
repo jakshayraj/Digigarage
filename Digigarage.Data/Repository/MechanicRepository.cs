@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Digigarage.Data.Models;
 using AutoMapper;
 using System.Data.Entity;
+using System.Linq;
 
 namespace Digigarage.Data.Repository
 {
@@ -47,6 +48,27 @@ namespace Digigarage.Data.Repository
         public MechanicViewModel GetMechanic(int Id)
         {
             MechanicViewModel mechanicsEntities = Mapper.Map<MechanicViewModel>(_dbContext.Mechanics.Find(Id));
+            return mechanicsEntities;
+        }
+
+        public IEnumerable<MechanicViewModel> GetMechanicOfMaintainance()
+        {
+            IEnumerable<MechanicViewModel> mechanicsEntities =
+                Mapper.Map<IEnumerable<MechanicViewModel>>(_dbContext.Mechanics.Where(a => a.DeptId == 3));
+            return mechanicsEntities;
+        }
+
+        public IEnumerable<MechanicViewModel> GetMechanicOfRepairing()
+        {
+            IEnumerable<MechanicViewModel> mechanicsEntities =
+                Mapper.Map<IEnumerable<MechanicViewModel>>(_dbContext.Mechanics.Where(a => a.DeptId == 2));
+            return mechanicsEntities;
+        }
+
+        public IEnumerable<MechanicViewModel> GetMechanicOfWashing()
+        {
+            IEnumerable<MechanicViewModel> mechanicsEntities =
+                Mapper.Map<IEnumerable<MechanicViewModel>>(_dbContext.Mechanics.Where(a => a.DeptId == 1));
             return mechanicsEntities;
         }
 

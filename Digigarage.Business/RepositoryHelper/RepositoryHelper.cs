@@ -1,4 +1,5 @@
-﻿using Digigarage.Data.Repository;
+﻿using Digigarage.Data;
+using Digigarage.Data.Repository;
 using Digigarage.Data.Repository.Interface;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,7 @@ namespace Digigarage.Business.RepositoryHelper
             Container.RegisterType<IServiceRepository, ServiceRepository>();
             Container.RegisterType<IBookingRepository, BookingRepository>();
             Container.RegisterType<IDepartmentRepostitory, DepartmentRepostitory>();
+            Container.RegisterType<IBookingHistoryRepository, BookingHistoryRepository>();
         }
     }
 }

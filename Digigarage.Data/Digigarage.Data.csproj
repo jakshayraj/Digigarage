@@ -56,7 +56,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Repository\BookingHistoryRepository.cs" />
     <Compile Include="Models\Booking.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BookingHistory.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Customer.cs">
@@ -109,6 +113,7 @@
     <Compile Include="Repository\Interface\IBookingRepository.cs" />
     <Compile Include="Repository\Interface\ICustomerRepository.cs" />
     <Compile Include="Repository\Interface\IMechanicRepository.cs" />
+    <Compile Include="Repository\Interface\IBookingHistoryRepository.cs" />
     <Compile Include="Repository\Interface\IServiceRepository.cs" />
     <Compile Include="Repository\Interface\IVehicleRepository.cs" />
     <Compile Include="Repository\LoginRepository.cs" />

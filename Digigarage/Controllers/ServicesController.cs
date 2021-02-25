@@ -12,6 +12,7 @@ using Digigarage.BusinessEntities;
 
 namespace Digigarage.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class ServicesController : Controller
     {
         private readonly IServiceManager _serviceManager;

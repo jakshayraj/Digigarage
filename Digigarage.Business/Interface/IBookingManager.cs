@@ -12,7 +12,6 @@ namespace Digigarage.Business.Interface
         BookingViewModel GetBooking(int? Id);
         IEnumerable<BookingViewModel> GetAllBooking();
         string CreateBooking(BookingViewModel model);
-        IEnumerable<BookingViewModel> GetAllBookingByCustomer(int id);
         string UpdateBooking(BookingViewModel model);
         string DeleteBooking(int? Id);
     }

@@ -11,6 +11,7 @@ using Digigarage.BusinessEntities;
 
 namespace Digigarage.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class MechanicsController : Controller
     {
         private readonly IMechanicManager _mechanicManager;

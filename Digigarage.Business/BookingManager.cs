@@ -34,9 +34,6 @@ namespace Digigarage.Business
         {
             return _BookingRepository.DeleteBooking(Id);
         }
-        public IEnumerable<BookingViewModel> GetAllBookingByCustomer(int id)
-        {
-            return _BookingRepository.GetAllBookingByCustomer(id);
-        }
+       
     }
 }

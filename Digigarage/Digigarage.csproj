@@ -150,9 +150,12 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\MaintainanceController.cs" />
     <Compile Include="Controllers\MechanicsController.cs" />
+    <Compile Include="Controllers\RepairingController.cs" />
     <Compile Include="Controllers\ServicesController.cs" />
     <Compile Include="Controllers\VehiclesController.cs" />
+    <Compile Include="Controllers\WashingController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -416,6 +419,12 @@
     <Content Include="Views\Vehicles\Create.cshtml" />
     <Content Include="Views\Vehicles\Edit.cshtml" />
     <Content Include="Views\Vehicles\Delete.cshtml" />
+    <Content Include="Views\Washing\Index.cshtml" />
+    <Content Include="Views\Washing\Edit.cshtml" />
+    <Content Include="Views\Maintainance\Index.cshtml" />
+    <Content Include="Views\Repairing\Index.cshtml" />
+    <Content Include="Views\Maintainance\Edit.cshtml" />
+    <Content Include="Views\Repairing\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

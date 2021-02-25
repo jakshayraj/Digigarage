@@ -35,5 +35,6 @@ namespace Digigarage.Data.Models
         public virtual DbSet<StautsOfBooking> StautsOfBookings { get; set; }
         public virtual DbSet<Vehicle> Vehicles { get; set; }
         public virtual DbSet<Booking> Bookings { get; set; }
+        public virtual DbSet<BookingHistory> BookingHistories { get; set; }
     }
 }

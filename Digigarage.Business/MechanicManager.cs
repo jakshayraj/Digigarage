@@ -34,5 +34,20 @@ namespace Digigarage.Business
         {
             return _MechanicRepository.DeleteMechanic(Id);
         }
+
+        public IEnumerable<MechanicViewModel> GetMechanicOfWashing()
+        {
+            return _MechanicRepository.GetMechanicOfWashing();
+        }
+
+        public IEnumerable<MechanicViewModel> GetMechanicOfRepairing()
+        {
+            return _MechanicRepository.GetMechanicOfRepairing();
+        }
+
+        public IEnumerable<MechanicViewModel> GetMechanicOfMaintainance()
+        {
+            return _MechanicRepository.GetMechanicOfMaintainance();
+        }
     }
 }

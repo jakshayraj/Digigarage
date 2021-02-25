@@ -53,9 +53,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BookingHistoryManager.cs" />
     <Compile Include="DepartmentManager.cs" />
     <Compile Include="BookingManager.cs" />
     <Compile Include="CustomerManager.cs" />
+    <Compile Include="Interface\IBookingHistoryManager.cs" />
     <Compile Include="Interface\IDepartmentManager.cs" />
     <Compile Include="Interface\IBookingManager.cs" />
     <Compile Include="Interface\ICustomerManager.cs" />

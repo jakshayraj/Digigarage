@@ -10,11 +10,23 @@
             <PropertyRef Name="BookingId" />
           </Key>
           <Property Name="BookingId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CustomerId" Type="int" />
           <Property Name="VehicleId" Type="int" />
           <Property Name="ServiceId" Type="int" />
           <Property Name="BookingDate" Type="date" />
           <Property Name="Status" Type="int" />
+          <Property Name="DepartmentId" Type="int" />
+          <Property Name="Description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="BookingHistory">
+          <Key>
+            <PropertyRef Name="HistoryId" />
+          </Key>
+          <Property Name="HistoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BookingId" Type="int" />
+          <Property Name="VehicleId" Type="int" />
+          <Property Name="ServiceId" Type="int" />
+          <Property Name="DepartmentId" Type="int" />
+          <Property Name="MechanicId" Type="int" />
         </EntityType>
         <EntityType Name="Customers">
           <Key>
@@ -71,21 +83,21 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="userId" Type="int" Nullable="false" />
-          <Property Name="UserRole" Type="nvarchar" MaxLength="10" />
+          <Property Name="UserRole" Type="nvarchar" MaxLength="15" />
         </EntityType>
         <EntityType Name="Service">
           <Key>
             <PropertyRef Name="ServiceId" />
           </Key>
           <Property Name="ServiceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ServiceName" Type="nvarchar" MaxLength="20" />
+          <Property Name="ServiceName" Type="nvarchar" MaxLength="30" />
         </EntityType>
         <EntityType Name="StautsOfBooking">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="Status" Type="nvarchar" MaxLength="8" />
+          <Property Name="Status" Type="nvarchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="Vehicles">
           <Key>
@@ -102,7 +114,19 @@
           <Property Name="EngineNo" Type="nvarchar" MaxLength="17" />
           <Property Name="CustomerId" Type="int" />
         </EntityType>
-        <Association Name="FK__Booking__Service__6FE99F9F">
+        <Association Name="FK__Booking__Departm__0E6E26BF">
+          <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
+          <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="DeptId" />
+            </Principal>
+            <Dependent Role="Booking">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Booking__Service__0F624AF8">
           <End Role="Service" Type="Self.Service" Multiplicity="0..1" />
           <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
           <ReferentialConstraint>
@@ -138,7 +162,67 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Mechanic__DeptId__52593CB8">
+        <Association Name="FK__BookingHi__Booki__1AD3FDA4">
+          <End Role="Booking" Type="Self.Booking" Multiplicity="0..1" />
+          <End Role="BookingHistory" Type="Self.BookingHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Booking">
+              <PropertyRef Name="BookingId" />
+            </Principal>
+            <Dependent Role="BookingHistory">
+              <PropertyRef Name="BookingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BookingHi__Depar__17036CC0">
+          <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
+          <End Role="BookingHistory" Type="Self.BookingHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="DeptId" />
+            </Principal>
+            <Dependent Role="BookingHistory">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BookingHi__Mecha__19DFD96B">
+          <End Role="Mechanic" Type="Self.Mechanic" Multiplicity="0..1" />
+          <End Role="BookingHistory" Type="Self.BookingHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mechanic">
+              <PropertyRef Name="MechanicId" />
+            </Principal>
+            <Dependent Role="BookingHistory">
+              <PropertyRef Name="MechanicId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BookingHi__Servi__17F790F9">
+          <End Role="Service" Type="Self.Service" Multiplicity="0..1" />
+          <End Role="BookingHistory" Type="Self.BookingHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Service">
+              <PropertyRef Name="ServiceId" />
+            </Principal>
+            <Dependent Role="BookingHistory">
+              <PropertyRef Name="ServiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BookingHi__Vehic__18EBB532">
+          <End Role="Vehicles" Type="Self.Vehicles" Multiplicity="0..1" />
+          <End Role="BookingHistory" Type="Self.BookingHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vehicles">
+              <PropertyRef Name="VehicleId" />
+            </Principal>
+            <Dependent Role="BookingHistory">
+              <PropertyRef Name="VehicleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Mechanic__DeptId__14270015">
           <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
           <End Role="Mechanic" Type="Self.Mechanic" Multiplicity="*" />
           <ReferentialConstraint>
@@ -147,18 +231,6 @@
             </Principal>
             <Dependent Role="Mechanic">
               <PropertyRef Name="DeptId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Payment__Service__5DCAEF64">
-          <End Role="Service" Type="Self.Service" Multiplicity="0..1" />
-          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Service">
-              <PropertyRef Name="ServiceId" />
-            </Principal>
-            <Dependent Role="Payment">
-              <PropertyRef Name="ServiceId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -174,7 +246,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Role__userId__38996AB5">
+        <Association Name="FK__Role__userId__0D7A0286">
           <End Role="Login" Type="Self.Login" Multiplicity="1" />
           <End Role="Role" Type="Self.Role" Multiplicity="*" />
           <ReferentialConstraint>
@@ -200,6 +272,7 @@
         </Association>
         <EntityContainer Name="DigigarageModelStoreContainer">
           <EntitySet Name="Booking" EntityType="Self.Booking" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BookingHistory" EntityType="Self.BookingHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Login" EntityType="Self.Login" Schema="dbo" store:Type="Tables" />
@@ -209,7 +282,11 @@
           <EntitySet Name="Service" EntityType="Self.Service" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StautsOfBooking" EntityType="Self.StautsOfBooking" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Vehicles" EntityType="Self.Vehicles" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Booking__Service__6FE99F9F" Association="Self.FK__Booking__Service__6FE99F9F">
+          <AssociationSet Name="FK__Booking__Departm__0E6E26BF" Association="Self.FK__Booking__Departm__0E6E26BF">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="Booking" EntitySet="Booking" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Booking__Service__0F624AF8" Association="Self.FK__Booking__Service__0F624AF8">
             <End Role="Service" EntitySet="Service" />
             <End Role="Booking" EntitySet="Booking" />
           </AssociationSet>
@@ -221,19 +298,35 @@
             <End Role="Vehicles" EntitySet="Vehicles" />
             <End Role="Booking" EntitySet="Booking" />
           </AssociationSet>
-          <AssociationSet Name="FK__Mechanic__DeptId__52593CB8" Association="Self.FK__Mechanic__DeptId__52593CB8">
+          <AssociationSet Name="FK__BookingHi__Booki__1AD3FDA4" Association="Self.FK__BookingHi__Booki__1AD3FDA4">
+            <End Role="Booking" EntitySet="Booking" />
+            <End Role="BookingHistory" EntitySet="BookingHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BookingHi__Depar__17036CC0" Association="Self.FK__BookingHi__Depar__17036CC0">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="BookingHistory" EntitySet="BookingHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BookingHi__Mecha__19DFD96B" Association="Self.FK__BookingHi__Mecha__19DFD96B">
+            <End Role="Mechanic" EntitySet="Mechanic" />
+            <End Role="BookingHistory" EntitySet="BookingHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BookingHi__Servi__17F790F9" Association="Self.FK__BookingHi__Servi__17F790F9">
+            <End Role="Service" EntitySet="Service" />
+            <End Role="BookingHistory" EntitySet="BookingHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BookingHi__Vehic__18EBB532" Association="Self.FK__BookingHi__Vehic__18EBB532">
+            <End Role="Vehicles" EntitySet="Vehicles" />
+            <End Role="BookingHistory" EntitySet="BookingHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Mechanic__DeptId__14270015" Association="Self.FK__Mechanic__DeptId__14270015">
             <End Role="Department" EntitySet="Department" />
             <End Role="Mechanic" EntitySet="Mechanic" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Payment__Service__5DCAEF64" Association="Self.FK__Payment__Service__5DCAEF64">
-            <End Role="Service" EntitySet="Service" />
-            <End Role="Payment" EntitySet="Payment" />
           </AssociationSet>
           <AssociationSet Name="FK__Payment__Vehicle__5EBF139D" Association="Self.FK__Payment__Vehicle__5EBF139D">
             <End Role="Vehicles" EntitySet="Vehicles" />
             <End Role="Payment" EntitySet="Payment" />
           </AssociationSet>
-          <AssociationSet Name="FK__Role__userId__38996AB5" Association="Self.FK__Role__userId__38996AB5">
+          <AssociationSet Name="FK__Role__userId__0D7A0286" Association="Self.FK__Role__userId__0D7A0286">
             <End Role="Login" EntitySet="Login" />
             <End Role="Role" EntitySet="Role" />
           </AssociationSet>
@@ -277,10 +370,6 @@
             <End Role="Payment" EntitySet="Payments" />
           </AssociationSet>
           <EntitySet Name="Bookings" EntityType="DigigarageModel.Booking" />
-          <AssociationSet Name="FK__Booking__Service__6FE99F9F" Association="DigigarageModel.FK__Booking__Service__6FE99F9F">
-            <End Role="Service" EntitySet="Services" />
-            <End Role="Booking" EntitySet="Bookings" />
-          </AssociationSet>
           <AssociationSet Name="FK__Booking__Status__71D1E811" Association="DigigarageModel.FK__Booking__Status__71D1E811">
             <End Role="StautsOfBooking" EntitySet="StautsOfBookings" />
             <End Role="Booking" EntitySet="Bookings" />
@@ -289,7 +378,36 @@
             <End Role="Vehicle" EntitySet="Vehicles" />
             <End Role="Booking" EntitySet="Bookings" />
           </AssociationSet>
-        </EntityContainer>
+          <AssociationSet Name="FK__Booking__Departm__0E6E26BF" Association="DigigarageModel.FK__Booking__Departm__0E6E26BF">
+            <End Role="Department" EntitySet="Departments" />
+            <End Role="Booking" EntitySet="Bookings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Booking__Service__0F624AF8" Association="DigigarageModel.FK__Booking__Service__0F624AF8">
+            <End Role="Service" EntitySet="Services" />
+            <End Role="Booking" EntitySet="Bookings" />
+          </AssociationSet>
+          <EntitySet Name="BookingHistories" EntityType="DigigarageModel.BookingHistory" />
+          <AssociationSet Name="FK__BookingHi__Depar__17036CC0" Association="DigigarageModel.FK__BookingHi__Depar__17036CC0">
+            <End Role="Department" EntitySet="Departments" />
+            <End Role="BookingHistory" EntitySet="BookingHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BookingHi__Servi__17F790F9" Association="DigigarageModel.FK__BookingHi__Servi__17F790F9">
+            <End Role="Service" EntitySet="Services" />
+            <End Role="BookingHistory" EntitySet="BookingHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BookingHi__Vehic__18EBB532" Association="DigigarageModel.FK__BookingHi__Vehic__18EBB532">
+            <End Role="Vehicle" EntitySet="Vehicles" />
+            <End Role="BookingHistory" EntitySet="BookingHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BookingHi__Booki__1AD3FDA4" Association="DigigarageModel.FK__BookingHi__Booki__1AD3FDA4">
+            <End Role="Booking" EntitySet="Bookings" />
+            <End Role="BookingHistory" EntitySet="BookingHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BookingHi__Mecha__19DFD96B" Association="DigigarageModel.FK__BookingHi__Mecha__19DFD96B">
+            <End Role="Mechanic" EntitySet="Mechanics" />
+            <End Role="BookingHistory" EntitySet="BookingHistories" />
+          </AssociationSet>
+          </EntityContainer>
         <EntityType Name="Login">
           <Key>
             <PropertyRef Name="Id" />
@@ -305,7 +423,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="userId" Type="Int32" Nullable="false" />
-          <Property Name="UserRole" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="UserRole" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Login" Relationship="DigigarageModel.FK__Role__userId__38996AB5" FromRole="Role" ToRole="Login" />
         </EntityType>
         <Association Name="FK__Role__userId__38996AB5">
@@ -340,6 +458,8 @@
           <Property Name="DeptId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Department1" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Mechanics" Relationship="DigigarageModel.FK__Mechanic__DeptId__52593CB8" FromRole="Department" ToRole="Mechanic" />
+          <NavigationProperty Name="Bookings" Relationship="DigigarageModel.FK__Booking__Departm__0E6E26BF" FromRole="Department" ToRole="Booking" />
+          <NavigationProperty Name="BookingHistories" Relationship="DigigarageModel.FK__BookingHi__Depar__17036CC0" FromRole="Department" ToRole="BookingHistory" />
         </EntityType>
         <EntityType Name="Mechanic">
           <Key>
@@ -352,6 +472,7 @@
           <Property Name="Brand" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="DeptId" Type="Int32" />
           <NavigationProperty Name="Department" Relationship="DigigarageModel.FK__Mechanic__DeptId__52593CB8" FromRole="Mechanic" ToRole="Department" />
+          <NavigationProperty Name="BookingHistories" Relationship="DigigarageModel.FK__BookingHi__Mecha__19DFD96B" FromRole="Mechanic" ToRole="BookingHistory" />
         </EntityType>
         <EntityType Name="Payment">
           <Key>
@@ -371,16 +492,17 @@
             <PropertyRef Name="ServiceId" />
           </Key>
           <Property Name="ServiceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ServiceName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="ServiceName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Payments" Relationship="DigigarageModel.FK__Payment__Service__5DCAEF64" FromRole="Service" ToRole="Payment" />
-          <NavigationProperty Name="Bookings" Relationship="DigigarageModel.FK__Booking__Service__6FE99F9F" FromRole="Service" ToRole="Booking" />
+          <NavigationProperty Name="Bookings" Relationship="DigigarageModel.FK__Booking__Service__0F624AF8" FromRole="Service" ToRole="Booking" />
+          <NavigationProperty Name="BookingHistories" Relationship="DigigarageModel.FK__BookingHi__Servi__17F790F9" FromRole="Service" ToRole="BookingHistory" />
         </EntityType>
         <EntityType Name="StautsOfBooking">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Status" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Bookings" Relationship="DigigarageModel.FK__Booking__Status__71D1E811" FromRole="StautsOfBooking" ToRole="Booking" />
         </EntityType>
         <EntityType Name="Vehicle">
@@ -400,6 +522,7 @@
           <NavigationProperty Name="Customer" Relationship="DigigarageModel.FK__Vehicles__Custom__4D94879B" FromRole="Vehicle" ToRole="Customer" />
           <NavigationProperty Name="Payments" Relationship="DigigarageModel.FK__Payment__Vehicle__5EBF139D" FromRole="Vehicle" ToRole="Payment" />
           <NavigationProperty Name="Bookings" Relationship="DigigarageModel.FK__Booking__Vehicle__70DDC3D8" FromRole="Vehicle" ToRole="Booking" />
+          <NavigationProperty Name="BookingHistories" Relationship="DigigarageModel.FK__BookingHi__Vehic__18EBB532" FromRole="Vehicle" ToRole="BookingHistory" />
         </EntityType>
         <Association Name="FK__Vehicles__Custom__4D94879B">
           <End Type="DigigarageModel.Customer" Role="Customer" Multiplicity="0..1" />
@@ -454,27 +577,18 @@
             <PropertyRef Name="BookingId" />
           </Key>
           <Property Name="BookingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CustomerId" Type="Int32" />
           <Property Name="VehicleId" Type="Int32" />
           <Property Name="ServiceId" Type="Int32" />
           <Property Name="BookingDate" Type="DateTime" Precision="0" />
           <Property Name="Status" Type="Int32" />
-          <NavigationProperty Name="Service" Relationship="DigigarageModel.FK__Booking__Service__6FE99F9F" FromRole="Booking" ToRole="Service" />
+          <Property Name="DepartmentId" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="StautsOfBooking" Relationship="DigigarageModel.FK__Booking__Status__71D1E811" FromRole="Booking" ToRole="StautsOfBooking" />
           <NavigationProperty Name="Vehicle" Relationship="DigigarageModel.FK__Booking__Vehicle__70DDC3D8" FromRole="Booking" ToRole="Vehicle" />
+          <NavigationProperty Name="Department" Relationship="DigigarageModel.FK__Booking__Departm__0E6E26BF" FromRole="Booking" ToRole="Department" />
+          <NavigationProperty Name="Service" Relationship="DigigarageModel.FK__Booking__Service__0F624AF8" FromRole="Booking" ToRole="Service" />
+          <NavigationProperty Name="BookingHistories" Relationship="DigigarageModel.FK__BookingHi__Booki__1AD3FDA4" FromRole="Booking" ToRole="BookingHistory" />
         </EntityType>
-        <Association Name="FK__Booking__Service__6FE99F9F">
-          <End Type="DigigarageModel.Service" Role="Service" Multiplicity="0..1" />
-          <End Type="DigigarageModel.Booking" Role="Booking" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Service">
-              <PropertyRef Name="ServiceId" />
-            </Principal>
-            <Dependent Role="Booking">
-              <PropertyRef Name="ServiceId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__Booking__Status__71D1E811">
           <End Type="DigigarageModel.StautsOfBooking" Role="StautsOfBooking" Multiplicity="0..1" />
           <End Type="DigigarageModel.Booking" Role="Booking" Multiplicity="*" />
@@ -499,7 +613,107 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <Association Name="FK__Booking__Departm__0E6E26BF">
+          <End Type="DigigarageModel.Department" Role="Department" Multiplicity="0..1" />
+          <End Type="DigigarageModel.Booking" Role="Booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="DeptId" />
+            </Principal>
+            <Dependent Role="Booking">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Booking__Service__0F624AF8">
+          <End Type="DigigarageModel.Service" Role="Service" Multiplicity="0..1" />
+          <End Type="DigigarageModel.Booking" Role="Booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Service">
+              <PropertyRef Name="ServiceId" />
+            </Principal>
+            <Dependent Role="Booking">
+              <PropertyRef Name="ServiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="BookingHistory">
+          <Key>
+            <PropertyRef Name="HistoryId" />
+          </Key>
+          <Property Name="HistoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BookingId" Type="Int32" />
+          <Property Name="VehicleId" Type="Int32" />
+          <Property Name="ServiceId" Type="Int32" />
+          <Property Name="DepartmentId" Type="Int32" />
+          <NavigationProperty Name="Department" Relationship="DigigarageModel.FK__BookingHi__Depar__17036CC0" FromRole="BookingHistory" ToRole="Department" />
+          <NavigationProperty Name="Service" Relationship="DigigarageModel.FK__BookingHi__Servi__17F790F9" FromRole="BookingHistory" ToRole="Service" />
+          <NavigationProperty Name="Vehicle" Relationship="DigigarageModel.FK__BookingHi__Vehic__18EBB532" FromRole="BookingHistory" ToRole="Vehicle" />
+          <Property Name="MechanicId" Type="Int32" />
+          <NavigationProperty Name="Booking" Relationship="DigigarageModel.FK__BookingHi__Booki__1AD3FDA4" FromRole="BookingHistory" ToRole="Booking" />
+          <NavigationProperty Name="Mechanic" Relationship="DigigarageModel.FK__BookingHi__Mecha__19DFD96B" FromRole="BookingHistory" ToRole="Mechanic" />
+        </EntityType>
+        <Association Name="FK__BookingHi__Depar__17036CC0">
+          <End Type="DigigarageModel.Department" Role="Department" Multiplicity="0..1" />
+          <End Type="DigigarageModel.BookingHistory" Role="BookingHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="DeptId" />
+            </Principal>
+            <Dependent Role="BookingHistory">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BookingHi__Servi__17F790F9">
+          <End Type="DigigarageModel.Service" Role="Service" Multiplicity="0..1" />
+          <End Type="DigigarageModel.BookingHistory" Role="BookingHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Service">
+              <PropertyRef Name="ServiceId" />
+            </Principal>
+            <Dependent Role="BookingHistory">
+              <PropertyRef Name="ServiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BookingHi__Vehic__18EBB532">
+          <End Type="DigigarageModel.Vehicle" Role="Vehicle" Multiplicity="0..1" />
+          <End Type="DigigarageModel.BookingHistory" Role="BookingHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vehicle">
+              <PropertyRef Name="VehicleId" />
+            </Principal>
+            <Dependent Role="BookingHistory">
+              <PropertyRef Name="VehicleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BookingHi__Booki__1AD3FDA4">
+          <End Type="DigigarageModel.Booking" Role="Booking" Multiplicity="0..1" />
+          <End Type="DigigarageModel.BookingHistory" Role="BookingHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Booking">
+              <PropertyRef Name="BookingId" />
+            </Principal>
+            <Dependent Role="BookingHistory">
+              <PropertyRef Name="BookingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BookingHi__Mecha__19DFD96B">
+          <End Type="DigigarageModel.Mechanic" Role="Mechanic" Multiplicity="0..1" />
+          <End Type="DigigarageModel.BookingHistory" Role="BookingHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mechanic">
+              <PropertyRef Name="MechanicId" />
+            </Principal>
+            <Dependent Role="BookingHistory">
+              <PropertyRef Name="MechanicId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -603,12 +817,25 @@
           <EntitySetMapping Name="Bookings">
             <EntityTypeMapping TypeName="DigigarageModel.Booking">
               <MappingFragment StoreEntitySet="Booking">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="BookingDate" ColumnName="BookingDate" />
                 <ScalarProperty Name="ServiceId" ColumnName="ServiceId" />
                 <ScalarProperty Name="VehicleId" ColumnName="VehicleId" />
-                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
                 <ScalarProperty Name="BookingId" ColumnName="BookingId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BookingHistories">
+            <EntityTypeMapping TypeName="DigigarageModel.BookingHistory">
+              <MappingFragment StoreEntitySet="BookingHistory">
+                <ScalarProperty Name="MechanicId" ColumnName="MechanicId" />
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+                <ScalarProperty Name="ServiceId" ColumnName="ServiceId" />
+                <ScalarProperty Name="VehicleId" ColumnName="VehicleId" />
+                <ScalarProperty Name="BookingId" ColumnName="BookingId" />
+                <ScalarProperty Name="HistoryId" ColumnName="HistoryId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

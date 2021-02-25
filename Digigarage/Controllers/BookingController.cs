@@ -11,6 +11,7 @@ using Digigarage.BusinessEntities;
 
 namespace Digigarage.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class BookingController : Controller
     {
        
@@ -28,8 +29,8 @@ namespace Digigarage.Controllers
         // GET: Dealers
         public ActionResult Index()
         {
-            IEnumerable<BookingViewModel> dealer =_bookingManager.GetAllBooking();
-            return View(dealer.ToList());
+            IEnumerable<BookingViewModel> booking =_bookingManager.GetAllBooking();
+            return View(booking.ToList());
         }
 
         
@@ -52,7 +53,6 @@ namespace Digigarage.Controllers
             try
             {
                 VehicleViewModel vehicle = _vehicleManager.GetAllVehicle().Where(a => a.VehicleId == booking.VehicleId).First();
-                booking.CustomerId = (int)vehicle.CustomerId;
                 if (ModelState.IsValid)
                 { 
                     string add = _bookingManager.CreateBooking(booking);
@@ -87,7 +87,8 @@ namespace Digigarage.Controllers
             }
             BookingViewModel booking = _bookingManager.GetBooking(id);
             ViewBag.VehicleId = new SelectList(_vehicleManager.GetAllVehicle().Where(a => a.VehicleId == booking.VehicleId), "VehicleId", "LicencePlate", selectedValue: booking.VehicleId);
-            ViewBag.ServiceId = new SelectList(_serviceManager.GetAllService(), "ServiceId", "ServiceName", selectedValue: booking.ServiceId);
+            ViewBag.ServiceId = new SelectList(_serviceManager.GetAllService().Where(a => a.ServiceId == booking.ServiceId), "ServiceId", "ServiceName", selectedValue: booking.ServiceId);
+            ViewBag.Status = new SelectList(_serviceManager.GetAllServiceStatus(), "Id", "Status", selectedValue: booking.Status);
             if (booking == null)
             {
                 return HttpNotFound();
@@ -115,7 +116,8 @@ namespace Digigarage.Controllers
                 ModelState.AddModelError("", ex.Message);
             }
             ViewBag.VehicleId = new SelectList(_vehicleManager.GetAllVehicle().Where(a=> a.VehicleId == booking.VehicleId), "VehicleId", "LicencePlate", selectedValue: booking.VehicleId);
-            ViewBag.ServiceId = new SelectList(_serviceManager.GetAllService(), "ServiceId", "ServiceName", selectedValue: booking.ServiceId);
+            ViewBag.ServiceId = new SelectList(_serviceManager.GetAllService().Where(a => a.ServiceId == booking.ServiceId), "ServiceId", "ServiceName", selectedValue: booking.ServiceId);
+            ViewBag.Status = new SelectList(_serviceManager.GetAllServiceStatus(), "Id", "Status", selectedValue: booking.Status);
             return View(booking);
         }
 
@@ -153,5 +155,8 @@ namespace Digigarage.Controllers
             string delete = _bookingManager.DeleteBooking(id);
             return RedirectToAction("Index");
         }
+
+        
+    
     }
 }
