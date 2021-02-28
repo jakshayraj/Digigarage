@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,7 @@ namespace Digigarage.BusinessEntities
         public Nullable<int> VehicleId { get; set; }
         [Required]
         public Nullable<int> ServiceId { get; set; }
+        [DisplayName("Booking Date")]
         public Nullable<System.DateTime> BookingDate { get; set; }
         public Nullable<int> Status { get; set; }
         public Nullable<int> DepartmentId { get; set; }

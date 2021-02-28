@@ -40,10 +40,19 @@ namespace Digigarage.Controllers
                         {
                             return this.RedirectToAction("Index", "Admin");
                         }
-                        else
+                        else if (role == "Washing")
                         {
-                            return this.RedirectToAction("Index", "Home");
+                            return this.RedirectToAction("Index", "Washing");
                         }
+                        else if (role == "Repairing")
+                        {
+                            return this.RedirectToAction("Index", "Repairing");
+                        }
+                        else if (role == "Maintainance")
+                        {
+                            return this.RedirectToAction("Index", "Maintainance");
+                        }
+
                     }
                     else
                     {

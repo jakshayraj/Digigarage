@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace Digigarage.Controllers
 {
+    [Authorize(Roles = "Washing")]
     public class WashingController : Controller
     {
         private readonly IBookingManager _bookingManager;
